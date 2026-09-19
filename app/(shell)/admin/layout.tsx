@@ -1,12 +1,7 @@
-import { AdminFooter, AdminHeader } from "@/components/admin/AdminShell";
-
-/** Admin console chrome: 40px header, three-column workspace and the 44px STIG strip above the shared nav rail. */
+/**
+ * Transitional: the Stitch header and STIG strip were removed when the global
+ * icon rail + top bar landed. The screen body is reworked in the Gotham pass.
+ */
 export default function AdminLayout({ children }: LayoutProps<"/admin">) {
-  return (
-    <div className="admin-console bg-surface text-on-surface antialiased select-none w-full flex-1 min-h-0 flex flex-col overflow-hidden">
-      <AdminHeader />
-      {children}
-      <AdminFooter />
-    </div>
-  );
+  return <div className="flex-1 min-h-0 flex flex-col overflow-hidden">{children}</div>;
 }

@@ -1,12 +1,7 @@
-import { MapFooter, MapHeader } from "@/components/map/MapShell";
-
-/** Tactical map chrome: 40px command header, content and the 36px audit strip, above the shared nav rail. */
+/**
+ * Transitional: the Stitch header and audit strip were removed when the global
+ * icon rail + top bar landed. The screen body is reworked in the Gotham pass.
+ */
 export default function MapLayout({ children }: LayoutProps<"/map">) {
-  return (
-    <div className="map-console bg-surface-dim text-on-surface antialiased select-none w-full flex-1 min-h-0 flex flex-col justify-between overflow-hidden">
-      <MapHeader />
-      {children}
-      <MapFooter />
-    </div>
-  );
+  return <div className="flex-1 min-h-0 flex flex-col overflow-hidden">{children}</div>;
 }

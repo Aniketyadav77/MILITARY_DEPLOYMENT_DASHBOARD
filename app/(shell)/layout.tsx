@@ -1,14 +1,9 @@
-import { BottomNav } from "@/components/shell/BottomNav";
+import { Chrome } from "@/components/gotham/Shell";
 
 /**
- * Shared ISCC shell for every screen: the screen fills the space above a persistent 56px navigation rail.
- * Layouts stay mounted across client-side navigation, so the rail never remounts or flickers.
+ * Operator console shell: 56px icon rail on the left, 44px top bar, screen below.
+ * Both are mounted once here, so they never remount across client-side navigation.
  */
 export default function ShellLayout({ children }: LayoutProps<"/">) {
-  return (
-    <div className="w-screen h-screen flex flex-col overflow-hidden">
-      <div className="flex-1 min-h-0 flex flex-col">{children}</div>
-      <BottomNav />
-    </div>
-  );
+  return <Chrome>{children}</Chrome>;
 }

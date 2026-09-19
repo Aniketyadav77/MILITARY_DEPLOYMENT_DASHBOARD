@@ -213,3 +213,174 @@ body {
   background-repeat: no-repeat;
   background-image: url("data:image/svg+xml,%3csvg viewBox='0 0 16 16' fill='white' xmlns='http://www.w3.org/2000/svg'%3e%3cpath d='M12.207 4.793a1 1 0 010 1.414l-5 5a1 1 0 01-1.414 0l-2-2a1 1 0 011.414-1.414L6.5 9.086l4.293-4.293a1 1 0 011.414 0z'/%3e%3c/svg%3e");
 }
+
+/* ============================================================================
+   GOTHAM OVERHAUL — operational design tokens.
+   Prefixed `g-` so the legacy Stitch/brand tokens above can be deleted screen
+   by screen as each one is reworked, without breaking the screens still on them.
+   ========================================================================== */
+@theme inline {
+  --color-g-bg: #0a0d12;
+  --color-g-panel: #10141b;
+  --color-g-raised: #151a23;
+  --color-g-hover: #1a212c;
+  --color-g-border: #1e2530;
+  --color-g-border-strong: #2a3342;
+
+  --color-g-text: #d6dbe4;
+  --color-g-text-2: #8a93a6;
+  --color-g-muted: #5a6478;
+
+  --color-g-red: #e5484d;
+  --color-g-amber: #f5a524;
+  --color-g-green: #30a46c;
+  --color-g-blue: #3e92cc;
+  --color-g-violet: #8b7bd8;
+
+  /* Data font: timestamps, IDs, IPs, counts. Always tabular. */
+  --font-data: var(--font-plex-mono), ui-monospace, monospace;
+
+  /* Micro label: panel headers, table headers, KPI labels. */
+  --text-micro: 10px;
+  --text-micro--line-height: 14px;
+  --text-micro--letter-spacing: 0.08em;
+  --text-micro--font-weight: 500;
+
+  --text-data: 12px;
+  --text-data--line-height: 16px;
+
+  --text-ui: 13px;
+  --text-ui--line-height: 18px;
+
+  --text-kpi: 24px;
+  --text-kpi--line-height: 28px;
+  --text-kpi--font-weight: 500;
+
+  --animate-g-in: g-in 200ms ease-out;
+  @keyframes g-in {
+    from {
+      opacity: 0;
+      transform: translateY(-6px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  --animate-g-toast: g-toast 180ms ease-out;
+  @keyframes g-toast {
+    from {
+      opacity: 0;
+      transform: translateX(12px);
+    }
+    to {
+      opacity: 1;
+      transform: translateX(0);
+    }
+  }
+
+  --animate-g-shake: g-shake 320ms ease-in-out;
+  @keyframes g-shake {
+    0%,
+    100% {
+      transform: translateX(0);
+    }
+    20%,
+    60% {
+      transform: translateX(-5px);
+    }
+    40%,
+    80% {
+      transform: translateX(5px);
+    }
+  }
+
+  --animate-g-skeleton: g-skeleton 1.4s ease-in-out infinite;
+  @keyframes g-skeleton {
+    0%,
+    100% {
+      opacity: 0.45;
+    }
+    50% {
+      opacity: 0.9;
+    }
+  }
+}
+
+/* Operator console: dense, flat, keyboard-driven. */
+.gotham {
+  background-color: var(--color-g-bg);
+  color: var(--color-g-text);
+  font-size: 13px;
+  line-height: 18px;
+}
+
+.gotham button {
+  cursor: pointer;
+}
+
+.gotham ::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+.gotham ::-webkit-scrollbar-track {
+  background: var(--color-g-bg);
+}
+
+.gotham ::-webkit-scrollbar-thumb {
+  background: var(--color-g-border-strong);
+}
+
+.gotham ::-webkit-scrollbar-thumb:hover {
+  background: #3a465a;
+}
+
+/* Every number in the console lines up column-to-column. */
+.tnum,
+.font-data {
+  font-variant-numeric: tabular-nums;
+}
+
+/* Flat square checkbox; no plugin, no rounded-full. */
+.g-check {
+  appearance: none;
+  width: 13px;
+  height: 13px;
+  flex-shrink: 0;
+  border: 1px solid var(--color-g-border-strong);
+  background: var(--color-g-bg);
+  border-radius: 2px;
+  vertical-align: middle;
+  print-color-adjust: exact;
+}
+
+.g-check:checked {
+  border-color: var(--color-g-blue);
+  background-color: var(--color-g-blue);
+  background-image: url("data:image/svg+xml,%3csvg viewBox='0 0 16 16' fill='%230A0D12' xmlns='http://www.w3.org/2000/svg'%3e%3cpath d='M12.207 4.793a1 1 0 010 1.414l-5 5a1 1 0 01-1.414 0l-2-2a1 1 0 011.414-1.414L6.5 9.086l4.293-4.293a1 1 0 011.414 0z'/%3e%3c/svg%3e");
+  background-size: 100% 100%;
+}
+
+.g-check:focus-visible {
+  outline: 1px solid var(--color-g-blue);
+  outline-offset: 1px;
+}
+
+/* Range input styled flat for the sensitivity slider. */
+.g-range {
+  appearance: none;
+  height: 2px;
+  background: var(--color-g-border-strong);
+  border-radius: 0;
+}
+
+.g-range::-webkit-slider-thumb {
+  appearance: none;
+  width: 10px;
+  height: 14px;
+  border-radius: 1px;
+  background: var(--color-g-blue);
+  cursor: grab;
+}
