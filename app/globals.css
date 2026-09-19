@@ -1,0 +1,215 @@
+@import "tailwindcss";
+
+/* Design tokens taken from the Stitch screen "ISCC Main Command Dashboard - 3-Zone Redesign". */
+@theme inline {
+  --color-brand-bg: #0e1116;
+  --color-brand-panel: #161b22;
+  --color-brand-border: #2a313b;
+  --color-brand-red: #d64545;
+  --color-brand-amber: #d9932b;
+  --color-brand-green: #2e9e63;
+  --color-brand-blue: #3b82c4;
+  --color-brand-purple: #8b5cf6;
+
+  --color-well: #0a0d12;
+  --color-hover: #1c2128;
+  --color-fg: #e1e4ea;
+  --color-fg-1: #c9d1d9;
+  --color-fg-2: #a0a6b2;
+  --color-fg-3: #8b949e;
+
+  /* Stitch: Inter, monospace, sans-serif. `font-mono` keeps the default system stack, as in Stitch. */
+  --font-sans: var(--font-inter), monospace, sans-serif;
+}
+
+body {
+  background-color: var(--color-brand-bg);
+  color: var(--color-fg);
+  font-family: var(--font-sans);
+}
+
+/* Tokens taken from the Stitch screen "ISCC Alert Console & Investigation Table" (Material-style names).
+   Purely additive: the dashboard keeps using the brand-* tokens above. */
+@theme inline {
+  --color-surface: #111319;
+  --color-surface-dim: #111319;
+  --color-surface-container-lowest: #0b0e13;
+  --color-surface-container-low: #191c21;
+  --color-surface-container: #1d2025;
+  --color-surface-container-high: #272a30;
+  --color-surface-container-highest: #32353a;
+  --color-on-surface: #e1e2e9;
+  --color-on-surface-variant: #c1c7d2;
+  --color-outline: #8b919b;
+  --color-outline-variant: #414750;
+  --color-primary: #9dcaff;
+  --color-primary-container: #5195d8;
+  --color-on-primary-container: #002b4c;
+  --color-secondary: #71db9a;
+  --color-tertiary: #ffb95b;
+  --color-tertiary-container: #c58319;
+  --color-on-tertiary-container: #3d2400;
+  --color-error: #ffb4ab;
+  --color-error-container: #93000a;
+
+  --spacing-space-xs: 4px;
+  --spacing-space-sm: 8px;
+  --spacing-space-md: 12px;
+
+  --text-headline-sm: 14px;
+  --text-headline-sm--line-height: 20px;
+  --text-headline-sm--font-weight: 600;
+  --text-label-sm: 10px;
+  --text-label-sm--line-height: 12px;
+  --text-label-sm--letter-spacing: 0.06em;
+  --text-label-sm--font-weight: 600;
+  --text-label-md: 11px;
+  --text-label-md--line-height: 14px;
+  --text-label-md--letter-spacing: 0.04em;
+  --text-label-md--font-weight: 500;
+  --text-code-sm: 11px;
+  --text-code-sm--line-height: 14px;
+  --text-code-sm--letter-spacing: 0.02em;
+  --text-code-sm--font-weight: 500;
+
+  --animate-tactical-pulse: tactical-pulse 1.2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+  @keyframes tactical-pulse {
+    0%,
+    100% {
+      opacity: 1;
+    }
+    50% {
+      opacity: 0.35;
+    }
+  }
+}
+
+/* Alert console scope: Stitch runs Tailwind v3 + the forms plugin, which we don't have, so the few
+   differences that show up in the design (button cursor, select chevron, thin scrollbars) live here. */
+.alerts-console button,
+.admin-console button,
+.devices-console button,
+.map-console button {
+  cursor: pointer;
+}
+
+.alerts-console ::-webkit-scrollbar {
+  width: 4px;
+  height: 4px;
+}
+
+.alerts-console ::-webkit-scrollbar-track {
+  background: #0b0e13;
+}
+
+.alerts-console ::-webkit-scrollbar-thumb {
+  background: #414750;
+}
+
+.alerts-select {
+  appearance: none;
+  background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='%236b7280' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='M6 8l4 4 4-4'/%3e%3c/svg%3e");
+  background-position: right 0.5rem center;
+  background-repeat: no-repeat;
+  background-size: 1.5em 1.5em;
+  print-color-adjust: exact;
+}
+
+/* Tokens and effects from the Stitch screen "ISCC Tactical GIS Cantonment Map". */
+@theme inline {
+  --color-on-primary: #003257;
+  --color-on-error: #690005;
+  --color-surface-bright: #36393f;
+  --color-surface-variant: #32353a;
+  --color-secondary-container: #00864e;
+
+  --animate-critical-pulse: pulse-critical 1.2s infinite ease-in-out;
+  @keyframes pulse-critical {
+    0%,
+    100% {
+      opacity: 1;
+      filter: drop-shadow(0 0 1px #d64545);
+    }
+    50% {
+      opacity: 0.35;
+      filter: drop-shadow(0 0 4px #d64545);
+    }
+  }
+}
+
+/* CAD grid: 20px minor / 100px major lines behind the tactical map. */
+.cad-grid {
+  background-color: #0b0e13;
+  background-image:
+    linear-gradient(#191c21 1px, transparent 1px),
+    linear-gradient(90deg, #191c21 1px, transparent 1px),
+    linear-gradient(#272a30 1px, transparent 1px),
+    linear-gradient(90deg, #272a30 1px, transparent 1px);
+  background-size: 20px 20px, 20px 20px, 100px 100px, 100px 100px;
+  background-position: -1px -1px, -1px -1px, -1px -1px, -1px -1px;
+}
+
+/* Tokens and helpers from the Stitch screen "ISCC Device Health & Hardware Diagnostics". */
+@theme inline {
+  --color-background: #111319;
+
+  --text-body-sm: 12px;
+  --text-body-sm--line-height: 16px;
+  --text-body-sm--font-weight: 400;
+
+  /* Stitch pairs Inter with JetBrains Mono for IDs, IPs, versions and readouts (`font-code-sm`).
+     The variable is provided by the devices route layout via next/font. */
+  --font-code-sm: var(--font-jetbrains-mono), var(--font-inter), monospace, sans-serif;
+}
+
+.custom-scroll::-webkit-scrollbar {
+  width: 5px;
+  height: 5px;
+}
+
+.custom-scroll::-webkit-scrollbar-track {
+  background: #0b0e13;
+}
+
+.custom-scroll::-webkit-scrollbar-thumb {
+  background: #272a30;
+  border-radius: 2px;
+}
+
+.custom-scroll::-webkit-scrollbar-thumb:hover {
+  background: #414750;
+}
+
+/* Stitch screen "ISCC System Administration & Configuration Console": thin scrollbars and forms-plugin checkboxes. */
+.admin-console ::-webkit-scrollbar {
+  width: 4px;
+  height: 4px;
+}
+
+.admin-console ::-webkit-scrollbar-track {
+  background: #0b0e13;
+}
+
+.admin-console ::-webkit-scrollbar-thumb {
+  background: #2a2e37;
+}
+
+/* Base look of the Tailwind forms plugin checkbox; fill colour follows the element's text colour. */
+.admin-checkbox {
+  appearance: none;
+  border-width: 1px;
+  border-style: solid;
+  display: inline-block;
+  flex-shrink: 0;
+  vertical-align: middle;
+  print-color-adjust: exact;
+}
+
+.admin-checkbox:checked {
+  border-color: transparent;
+  background-color: currentColor;
+  background-size: 100% 100%;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-image: url("data:image/svg+xml,%3csvg viewBox='0 0 16 16' fill='white' xmlns='http://www.w3.org/2000/svg'%3e%3cpath d='M12.207 4.793a1 1 0 010 1.414l-5 5a1 1 0 01-1.414 0l-2-2a1 1 0 011.414-1.414L6.5 9.086l4.293-4.293a1 1 0 011.414 0z'/%3e%3c/svg%3e");
+}
