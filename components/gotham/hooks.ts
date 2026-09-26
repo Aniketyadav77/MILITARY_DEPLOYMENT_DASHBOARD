@@ -1,6 +1,6 @@
 "use client";
 
-import { useCallback, useEffect, useMemo, useRef, useState, useSyncExternalStore } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState, useSyncExternalStore, type RefObject } from "react";
 
 /* ---------------------------------------------------------------------- clock */
 
@@ -24,6 +24,66 @@ export function useClock() {
     },
     () => "--:--:--",
   );
+}
+
+/**
+ * Current epoch second, ticking every second — for "retrying in 8s" style
+ * countdowns. Whole seconds keep the snapshot stable between ticks.
+ */
+export function useEpochSecond() {
+  return useSyncExternalStore(
+    subscribeSecond,
+    () => Math.floor(Date.now() / 1000),
+    () => 0,
+  );
+}
+
+/* ----------------------------------------------------------- page visibility */
+
+function subscribeVisibility(cb: () => void) {
+  document.addEventListener("visibilitychange", cb);
+  return () => document.removeEventListener("visibilitychange", cb);
+}
+
+/** False while the tab is hidden, so live work can stand down in the background. */
+export function usePageVisible() {
+  return useSyncExternalStore(
+    subscribeVisibility,
+    () => document.visibilityState !== "hidden",
+    () => false,
+  );
+}
+
+/* ------------------------------------------------------------------ in view */
+
+/**
+ * Whether an element is on screen (clipped by scroll containers too). Entering
+ * view settles for `enterMs` and leaving for `leaveMs`, so a fast scroll past a
+ * tile doesn't open and immediately close a connection.
+ */
+export function useInView<T extends Element>(ref: RefObject<T | null>, enterMs = 150, leaveMs = 1500) {
+  const [inView, setInView] = useState(false);
+
+  useEffect(() => {
+    const el = ref.current;
+    if (!el) return;
+    let timer: ReturnType<typeof setTimeout> | undefined;
+    const io = new IntersectionObserver(
+      ([entry]) => {
+        clearTimeout(timer);
+        const next = entry.isIntersecting;
+        timer = setTimeout(() => setInView(next), next ? enterMs : leaveMs);
+      },
+      { threshold: 0.15 },
+    );
+    io.observe(el);
+    return () => {
+      clearTimeout(timer);
+      io.disconnect();
+    };
+  }, [ref, enterMs, leaveMs]);
+
+  return inView;
 }
 
 /* ------------------------------------------------------------------- sortable */

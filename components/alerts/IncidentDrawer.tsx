@@ -73,7 +73,7 @@ export function IncidentDrawer() {
               <div className={`${toneClass[tone]} ${strong ? "font-semibold" : ""} text-right`}>
                 {value}
               </div>
-            </div>
+            </div> 
           ))}
         </div>
         <div className="border border-outline-variant bg-surface-container-lowest p-2 mt-1">
@@ -85,7 +85,7 @@ export function IncidentDrawer() {
             <div className="bg-error h-full" style={{ width: "98.4%" }} />
           </div>
         </div>
-      </div>
+      </div>   
 
       {/* Right: operator log & dispatch */}
       <div className="col-span-4 flex flex-col justify-between">
